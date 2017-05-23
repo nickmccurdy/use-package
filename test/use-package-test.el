@@ -48,6 +48,20 @@
   (should (equal (use-package-normalize-mode 'foopkg :mode '((".foo" . foo) (".bar" . bar)))
                  '((".foo" . foo) (".bar" . bar)))))
 
+(ert-deftest use-package/:hook ()
+  (let ((a-hook) (b-hook))
+    (use-package foopkg :hook '((a . a) (b . b)))
+    (should (equal a-hook '(a)))
+    (should (equal b-hook '(b)))))
+
+(ert-deftest use-package-handler/:hook ()
+  (should (equal (use-package-handler/:hook 'foopkg
+                                            :hook
+                                            '((a . a) (b . b))
+                                            nil
+                                            nil)
+                 '((add-hooks ((a . a) (b . b)))))))
+
 ;; Local Variables:
 ;; indent-tabs-mode: nil
 ;; no-byte-compile: t

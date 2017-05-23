@@ -7,7 +7,7 @@
 ;; Created: 17 Jun 2012
 ;; Modified: 17 Oct 2016
 ;; Version: 2.3
-;; Package-Requires: ((bind-key "1.0") (diminish "0.44"))
+;; Package-Requires: ((add-hooks "2.0.0") (bind-key "1.0") (diminish "0.44"))
 ;; Keywords: dotemacs startup speed config package
 ;; URL: https://github.com/jwiegley/use-package
 
@@ -39,10 +39,10 @@
 
 ;;; Code:
 
+(require 'add-hooks)
 (require 'bind-key)
 (require 'bytecomp)
 (require 'diminish nil t)
-(require 'bytecomp)
 (eval-when-compile (require 'cl))
 (eval-when-compile (require 'regexp-opt))
 
@@ -150,6 +150,7 @@ the user specified."
     :bind*
     :bind-keymap
     :bind-keymap*
+    :hook
     :interpreter
     :mode
     :commands
@@ -1085,6 +1086,17 @@ deferred until the prefix key sequence is pressed."
 
 (defun use-package-handler/:bind-keymap* (name keyword arg rest state)
   (use-package-handler/:bind-keymap name keyword arg rest state t))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;;; :hook
+;;
+
+(defun use-package-handler/:hook (name-symbol keyword arg rest state)
+  (let ((body (use-package-process-keywords name-symbol rest state)))
+    (use-package-concat
+     body
+     `((add-hooks ,arg)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
