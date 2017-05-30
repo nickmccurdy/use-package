@@ -50,7 +50,7 @@
 
 (ert-deftest use-package/:hook ()
   (let ((a-hook) (b-hook))
-    (use-package foopkg :hook '((a . a) (b . b)))
+    (use-package foopkg :hook ((a . a) (b . b)))
     (should (equal a-hook '(a)))
     (should (equal b-hook '(b)))))
 
@@ -60,7 +60,7 @@
                                             '((a . a) (b . b))
                                             nil
                                             nil)
-                 '((add-hooks ((a . a) (b . b)))))))
+                 '((add-hooks '((a . a) (b . b)))))))
 
 ;; Local Variables:
 ;; indent-tabs-mode: nil

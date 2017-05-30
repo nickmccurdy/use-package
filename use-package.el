@@ -454,7 +454,7 @@ This is in contrast to merely setting it to 0."
                (nreverse
                 (sort plist-grouped
                       #'(lambda (l r) (< (use-package-keyword-index (car l))
-                                    (use-package-keyword-index (car r)))))))
+                                         (use-package-keyword-index (car r)))))))
         (setq result (cons (car x) (cons (cdr x) result))))
       result)))
 
@@ -1096,7 +1096,7 @@ deferred until the prefix key sequence is pressed."
   (let ((body (use-package-process-keywords name-symbol rest state)))
     (use-package-concat
      body
-     `((add-hooks ,arg)))))
+     `((add-hooks ',arg)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
