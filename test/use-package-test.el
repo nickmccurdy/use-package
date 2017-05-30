@@ -60,7 +60,7 @@
                                             '((a . a) (b . b))
                                             nil
                                             nil)
-                 '((add-hooks '((a . a) (b . b)))))))
+                 '((if (fboundp 'add-hooks) (add-hooks '((a . a) (b . b))))))))
 
 ;; Local Variables:
 ;; indent-tabs-mode: nil

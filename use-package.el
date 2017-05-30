@@ -1096,7 +1096,7 @@ deferred until the prefix key sequence is pressed."
   (let ((body (use-package-process-keywords name-symbol rest state)))
     (use-package-concat
      body
-     `((add-hooks ',arg)))))
+     `((if (fboundp 'add-hooks) (add-hooks ',arg))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
