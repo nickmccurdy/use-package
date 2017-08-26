@@ -54,6 +54,27 @@
     (should (equal a-hook '(a)))
     (should (equal b-hook '(b)))))
 
+(ert-deftest use-package-normalize-delight ()
+  (should (equal `((foo-mode nil foo))
+                 (use-package-normalize/:delight 'foo :delight nil)))
+  (should (equal `((foo-mode nil foo-mode))
+                 (use-package-normalize/:delight 'foo-mode :delight nil)))
+  (should (equal `((bar-mode nil foo))
+                 (use-package-normalize/:delight 'foo :delight '(bar-mode))))
+  (should (equal `((bar-mode nil :major))
+                 (use-package-normalize/:delight 'foo :delight '((bar-mode nil :major)))))
+  (should (equal `((foo-mode "abc" foo))
+                 (use-package-normalize/:delight 'foo :delight '("abc"))))
+  (should (equal `((foo-mode (:eval 1) foo))
+                 (use-package-normalize/:delight 'foo :delight '('(:eval 1)))))
+  (should (equal `((a-mode nil foo)
+                   (b-mode " b" foo))
+                 (use-package-normalize/:delight 'foo :delight '((a-mode)
+                                                                 (b-mode " b")))))
+  (should-error (use-package-normalize/:delight 'foo :delight '((:eval 1))))
+
+  )
+
 (ert-deftest use-package-handler/:hook ()
   (should (equal (use-package-handler/:hook 'foopkg
                                             :hook
